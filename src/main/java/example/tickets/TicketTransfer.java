@@ -15,7 +15,7 @@ public final class TicketTransfer {
 
     public Preview preview() {
         // Preview is also called by link unfurlers and email scanners.
-        return new Preview("NIGHT / SHIFT", "Transfer invitation");
+        return new Preview("NIGHT / SHIFT", "A ticket is waiting for you");
     }
 
     public void accept(String signedInAccount) {
