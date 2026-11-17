@@ -9,6 +9,7 @@
     "demo/ticket-transfer/pom.xml": "96f4e1f2e4034fdde7d4390121fc1907054f270169efb489f10e471adbc65e88",
     "demo/ticket-transfer/src/main/java/example/tickets/TicketTransfer.java": "2af7e5e6b562acf902772703729a769a2c86ec5867af6709c075dde6f26086e2",
     "demo/ticket-transfer/src/test/java/example/tickets/TransferContractTest.java": "8555fc6654fbe2133b5d4820715a16e71994d965ba5d377c1793b8d4cd196559",
+    "docs/cases/behavior-gallery.json": "129efb1bc8d53a52c9de634fa91b3316f10d5cafdb9728089de4ed129235251c",
     "experiments/behavior-search/explore.py": "4387cd62b4ecf64be7da70d53d720d14b4e293b2f2cb2235ad0252e06361d080",
     "experiments/behavior-search/java/ExecutionAdapter.java": "dd379bd98a5323c285a6e40a8b39dcc5c1e8d8f989bd83b0a5b8f8d620c41d85",
     "experiments/behavior-search/java/RefundAdapter.java": "1d881fe95af7c9424f4c49787fdaf1918cf549d9d17b109432331c7c2b6dbb0f",
@@ -27,6 +28,7 @@
     "experiments/behavior-search/strategy-lock.json": "b7eca303ac098f8fe03841133c1ab9f0ccf60875ab1540cf3670a8029e1464c9",
     "experiments/behavior-search/ticket-scenario.json": "64e2f234066e4262da8ab0505756be9e0214070a86ce43b2d5308920d4a16ba0",
     "experiments/behavior-search/ticket_behavior.py": "0e65a849b55ffe55d14af79025febbd1527273773c510b965b0c52d571dc9631",
+    "scripts/behavior-gallery.py": "50ae20744aec0f78e1cf3476b71ed7e6788de95af0e0b5d607aa4e2e7d447580",
     "scripts/behavior-review.py": "3c8176c604df40ab65431af856b1d8a3821283181ab187c9a691699edbe43dd3"
   },
   "kind": "vendored-behavior-review",

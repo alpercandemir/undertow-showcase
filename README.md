@@ -2,6 +2,8 @@
 
 ## Automated behavior review
 
+The **Behavior case gallery** workflow adds [eight reviewable cases](CASE-GALLERY.md): two happy paths, five distinct business-rule violations and one compilation failure. Open its Actions summary to compare all results and read actual operation traces.
+
 Every push and pull request runs **Behavior review**. Open the check's **Details** and read the Actions summary; no local setup or commands are required from the reviewer.
 
 - **ticket-transfer-candidate** checks this repository's actual ticket implementation.
