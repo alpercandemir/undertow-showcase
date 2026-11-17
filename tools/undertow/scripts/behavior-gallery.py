@@ -154,7 +154,7 @@ def render(rows):
               'Rejected unauthorized, conflicting or over-limit requests in a happy path are correct behavior. '
               'INCOMPLETE establishes no business-rule verdict. All amounts use integer minor units.', '']
     for row in rows:
-        lines += [f"<a id=\"{row['id']}\"></a>", f"## {row['title']}", '', f"**Observed: {row['observed']}** — {row['rule']}", '']
+        lines += [f"<a id=\"{row['id']}\"></a>", '', f"## {row['title']}", '', f"**Observed: {row['observed']}** — {row['rule']}", '']
         selected = row.get('walkthrough') or row.get('finding')
         if selected:
             behavior = explore.PROFILES[row['profile']]

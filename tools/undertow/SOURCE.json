@@ -28,7 +28,7 @@
     "experiments/behavior-search/strategy-lock.json": "b7eca303ac098f8fe03841133c1ab9f0ccf60875ab1540cf3670a8029e1464c9",
     "experiments/behavior-search/ticket-scenario.json": "64e2f234066e4262da8ab0505756be9e0214070a86ce43b2d5308920d4a16ba0",
     "experiments/behavior-search/ticket_behavior.py": "0e65a849b55ffe55d14af79025febbd1527273773c510b965b0c52d571dc9631",
-    "scripts/behavior-gallery.py": "50ae20744aec0f78e1cf3476b71ed7e6788de95af0e0b5d607aa4e2e7d447580",
+    "scripts/behavior-gallery.py": "86770d35445ef0b2b7c324f40263b51c695c8c81230ac6f9eae27df98a9a5c1f",
     "scripts/behavior-review.py": "3c8176c604df40ab65431af856b1d8a3821283181ab187c9a691699edbe43dd3"
   },
   "kind": "vendored-behavior-review",
