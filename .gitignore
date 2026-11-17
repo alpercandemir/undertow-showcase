@@ -1,1 +1,8 @@
 target/
+
+# Local Python execution artifacts
+__pycache__/
+*.pyc
+
+# Disposable behavior-review evidence
+.undertow/
