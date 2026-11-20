@@ -1,7 +1,9 @@
 # Undertow showcase
 
-This repository demonstrates how Undertow reports a business rule change in a pull request. Its [workflow](.github/workflows/change-review.yml) uses the published [Undertow GitHub Action](https://github.com/alpercandemir/undertow/releases/tag/v0.2.1).
+Explore a storefront release with ten business changes in a single pull request. The advisory report starts with a removed endpoint and two previously eligible requests that the new policies reject. Six changes to existing flows and a new gift quote feature follow. [Read the prioritized PR report](https://github.com/alpercandemir/undertow-showcase/pull/6#issuecomment-7039643058)
 
-In the [free-delivery example PR](https://github.com/alpercandemir/undertow-showcase/pull/5), orders of exactly $50 become eligible for free delivery. Only the eligibility function changes. The standard checkout uses it to calculate shipping, and gift checkout uses that same shipping calculation. Both callers stay outside the diff.
+![Storefront release impact](https://raw.githubusercontent.com/alpercandemir/undertow/v0.3.0/docs/assets/storefront-impact.svg)
 
-Open the PR conversation for the Undertow comment and the source references linking these flows. The workflow also publishes Markdown and JSON reports. This example uses the built-in source analysis with the GitHub Actions token.
+The release PR includes a worked example for each change. Expand a finding in the bot comment to see the changed source and matched callers. The showcase runs the built-in engine without a model key. [Explore the ten changes](https://github.com/alpercandemir/undertow-showcase/pull/6/files) · [Workflow](.github/workflows/change-review.yml) · [Undertow release](https://github.com/alpercandemir/undertow/releases/tag/v0.3.0)
+
+For a smaller example, follow a single free-shipping threshold into the unchanged gift checkout calculation. [One-line shipping PR](https://github.com/alpercandemir/undertow-showcase/pull/5#issuecomment-7037780019)
