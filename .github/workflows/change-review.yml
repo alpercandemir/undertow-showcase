@@ -1,4 +1,5 @@
 name: Undertow change review
+run-name: Undertow change review (${{ inputs.scenario || 'pull request' }})
 
 on:
   pull_request:
@@ -26,7 +27,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
-      - uses: alpercandemir/undertow@23fb7c886445c827bc66c53c32ee1c2b1efcd7c8 # v0.1.1-alpha.1
+      - uses: alpercandemir/undertow/actions/change-review@c524a202f99d4ad1df47aab85601844b9d115296 # v0.1.1-alpha.1
         with:
           java-version: '21'
           base: ${{ github.event_name == 'workflow_dispatch' && 'b73b50a67ea9efcdf83658cd897ca83c34a4819a' || '' }}
