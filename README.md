@@ -1,5 +1,9 @@
 # NIGHT / SHIFT — ticket-transfer fixture
 
+## Review a pull request with Undertow
+
+This showcase uses the released Undertow GitHub Action. Try the historical ticket-preview regression and correction from the Actions tab. [Walkthrough](CHANGE-REVIEW.md).
+
 ## Automated behavior review
 
 The **Behavior case gallery** workflow adds [eight reviewable cases](CASE-GALLERY.md): two happy paths, five distinct business-rule violations and one compilation failure. Open its Actions summary to compare all results and read actual operation traces.
