@@ -1,0 +1,34 @@
+name: Undertow change review
+run-name: Undertow change review (${{ inputs.scenario || 'pull request' }})
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      scenario:
+        description: Historical ticket preview change to demonstrate
+        required: true
+        type: choice
+        default: regression
+        options:
+          - regression
+          - correction
+
+permissions:
+  contents: read
+
+concurrency:
+  group: undertow-change-review-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: alpercandemir/undertow/actions/change-review@c524a202f99d4ad1df47aab85601844b9d115296 # v0.1.1-alpha.1
+        with:
+          java-version: '21'
+          base: ${{ github.event_name == 'workflow_dispatch' && 'b73b50a67ea9efcdf83658cd897ca83c34a4819a' || '' }}
+          head: ${{ github.event_name == 'workflow_dispatch' && (inputs.scenario == 'correction' && '59903f7b13a4ef5fe6164d38d34e6c302e7ec72c' || '04b896ba3a6eab70371e5ad266e4288f652a9507') || '' }}
