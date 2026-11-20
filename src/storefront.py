@@ -1,6 +1,7 @@
 from flask import Flask, request
 
 from checkout import shipping_fee
+from gift_checkout import gift_checkout_total
 from policies import (
     accepts_backorders, accepts_return, allows_installments, can_retry_delivery,
     express_dispatch_days, refund_state, reward_points_per_dollar,
@@ -9,9 +10,9 @@ from policies import (
 app = Flask(__name__)
 
 
-@app.post("/bulk-quotes")
-def bulk_quotes():
-    return {"shipping": [shipping_fee(total) for total in request.json["totals"]]}
+@app.post("/gift-quotes")
+def gift_quote():
+    return {"total": gift_checkout_total(request.json["order_total"])}
 
 
 @app.get("/orders/<int:total>/quote")
