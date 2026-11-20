@@ -1,7 +1,7 @@
 # Undertow showcase
 
-This repository demonstrates how Undertow reports a business rule change in a pull request. Its [workflow](.github/workflows/change-review.yml) uses the published [Undertow GitHub Action](https://github.com/alpercandemir/undertow/releases/tag/v0.2.0).
+This repository demonstrates how Undertow reports a business rule change in a pull request. Its [workflow](.github/workflows/change-review.yml) uses the published [Undertow GitHub Action](https://github.com/alpercandemir/undertow/releases/tag/v0.2.1).
 
-The [free-delivery change](https://github.com/alpercandemir/undertow-showcase/compare/main...codex/free-delivery-threshold) lowers the entry threshold from above $50 to $50 and above. At exactly $50, `qualifies_for_free_delivery` used to return `False` and now returns `True`.
+In the [free-delivery example PR](https://github.com/alpercandemir/undertow-showcase/pull/5), orders of exactly $50 become eligible for free delivery. Only the eligibility function changes. The standard checkout uses it to calculate shipping, and gift checkout uses that same shipping calculation. Both callers stay outside the diff.
 
-Open the PR conversation for the Undertow comment, or open the workflow run for its Markdown and JSON report. The example uses the built-in source analysis with the GitHub Actions token. The report links to the changed line on each revision.
+Open the PR conversation for the Undertow comment and the source references linking these flows. The workflow also publishes Markdown and JSON reports. This example uses the built-in source analysis with the GitHub Actions token.
