@@ -7,6 +7,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: coupon-replay-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 jobs:
   replay:
     name: Replay coupon checkout tests
@@ -33,17 +37,31 @@ jobs:
           echo "$RUNNER_TEMP/replay-env/bin" >> "$GITHUB_PATH"
 
       - name: Compare the three-item basket
-        uses: alpercandemir/undertow/actions/test-replay@6190350a6531e306482f156090c43961c4cff4f2
+        uses: alpercandemir/undertow/actions/test-replay@8875d27f44dc736061b5097b297e948774d4d8bd
         with:
           base: ${{ steps.comparison.outputs.base }}
           head: ${{ github.event.pull_request.head.sha }}
           test: tests/test_coupon_checkout.py::test_coupon_rounds_once_on_cart_subtotal
-          artifact-name: three-item-basket
+          artifact-name: coupon-1-three-item
 
       - name: Compare the single-item basket
-        uses: alpercandemir/undertow/actions/test-replay@6190350a6531e306482f156090c43961c4cff4f2
+        uses: alpercandemir/undertow/actions/test-replay@8875d27f44dc736061b5097b297e948774d4d8bd
         with:
           base: ${{ steps.comparison.outputs.base }}
           head: ${{ github.event.pull_request.head.sha }}
           test: tests/test_coupon_checkout.py::test_single_item_coupon_total
-          artifact-name: single-item-basket
+          artifact-name: coupon-2-single-item
+
+  publish:
+    name: Publish replay observations
+    needs: replay
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    permissions:
+      actions: read
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: alpercandemir/undertow/actions/replay-comment@8875d27f44dc736061b5097b297e948774d4d8bd
+        with:
+          artifact-pattern: coupon-*-replay-*-${{ github.run_attempt }}
