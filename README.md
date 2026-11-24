@@ -1,9 +1,13 @@
 # Undertow showcase
 
-Explore a storefront release with ten business changes in a single pull request. The advisory report starts with a removed endpoint and two previously eligible requests that the new policies reject. Six changes to existing flows and a new gift quote feature follow. [Read the prioritized PR report](https://github.com/alpercandemir/undertow-showcase/pull/6#issuecomment-7039643058)
+Click #2934 introduced a regression that the existing test suite missed. A command iterating over stdin started aborting at normal end of input. This showcase uses a reviewed probe for that public API. Undertow generates the input, runs it on the two commits, and exports a pytest test using the original behavior as the expectation. [Original PR](https://github.com/pallets/click/pull/2934) · [Bug report](https://github.com/pallets/click/issues/2939)
 
-![Storefront release impact](https://raw.githubusercontent.com/alpercandemir/undertow/v0.3.0/docs/assets/storefront-impact.svg)
+| Check | Before the PR | With the PR | Upstream fix |
+| --- | --- | --- | --- |
+| Each revision's original pytest suite | 737 passed | 738 passed | 1,284 passed |
+| Generated input of one stdin line | Exit 0 | `Aborted!`, exit 1 | Exit 0 |
+| Generated pytest test | Pass | Fail | Pass |
 
-The release PR includes a worked example for each change. Expand a finding in the bot comment to see the changed source and matched callers. The showcase runs the built-in engine without a model key. [Explore the ten changes](https://github.com/alpercandemir/undertow-showcase/pull/6/files) · [Workflow](.github/workflows/change-review.yml) · [Undertow release](https://github.com/alpercandemir/undertow/releases/tag/v0.3.0)
+Open the workflow in Actions and select **Run workflow**. The run summary shows the input and observed outputs. Download `click-stdin-regression` for the JSON evidence and generated test. The workflow compares the first two revisions. The evaluation includes the fixed revision and the original test suite runs. [Actions workflow](https://github.com/alpercandemir/undertow-showcase/actions/workflows/behavior-replay.yml) · [Workflow source](.github/workflows/behavior-replay.yml) · [Full Click evaluation](https://github.com/alpercandemir/undertow/blob/main/evaluation/click-replay.md)
 
-For a smaller example, follow a single free-shipping threshold into the unchanged gift checkout calculation. [One-line shipping PR](https://github.com/alpercandemir/undertow-showcase/pull/5#issuecomment-7037780019)
+The earlier storefront and coupon PRs illustrate known policy changes. The coupon PR already includes its own test for rounding the discount once per basket. [Storefront example](https://github.com/alpercandemir/undertow-showcase/pull/6) · [Coupon example](https://github.com/alpercandemir/undertow-showcase/pull/7)
