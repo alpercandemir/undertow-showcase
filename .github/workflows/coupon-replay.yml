@@ -1,8 +1,9 @@
-name: Coupon checkout replay
+name: Coupon behavior replay
 
 on:
   pull_request:
     branches: [codex/coupon-rounding-baseline]
+    types: [opened, synchronize, reopened, edited]
 
 permissions:
   contents: read
@@ -13,11 +14,11 @@ concurrency:
 
 jobs:
   replay:
-    name: Replay coupon checkout tests
+    name: Discover coupon behavior differences
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     outputs:
       attempt: ${{ steps.comparison.outputs.attempt }}
-    timeout-minutes: 5
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
@@ -34,30 +35,14 @@ jobs:
           echo "base=$(git merge-base "$BASE_SHA" "$HEAD_SHA")" >> "$GITHUB_OUTPUT"
           echo "attempt=$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
 
-      - name: Install pytest
-        run: |
-          python3 -m venv "$RUNNER_TEMP/replay-env"
-          "$RUNNER_TEMP/replay-env/bin/python" -m pip install pytest==8.3.5
-          echo "$RUNNER_TEMP/replay-env/bin" >> "$GITHUB_PATH"
-
-      - name: Compare the three-item basket
-        uses: alpercandemir/undertow/actions/test-replay@8875d27f44dc736061b5097b297e948774d4d8bd
+      - uses: alpercandemir/undertow/actions/behavior-replay@d9b6220bf2238887f7d438dbc8fee1d7b17412b5
         with:
           base: ${{ steps.comparison.outputs.base }}
           head: ${{ github.event.pull_request.head.sha }}
-          test: tests/test_coupon_checkout.py::test_coupon_rounds_once_on_cart_subtotal
-          artifact-name: coupon-1-three-item
-
-      - name: Compare the single-item basket
-        uses: alpercandemir/undertow/actions/test-replay@8875d27f44dc736061b5097b297e948774d4d8bd
-        with:
-          base: ${{ steps.comparison.outputs.base }}
-          head: ${{ github.event.pull_request.head.sha }}
-          test: tests/test_coupon_checkout.py::test_single_item_coupon_total
-          artifact-name: coupon-2-single-item
+          artifact-name: coupon-behavior
 
   publish:
-    name: Publish replay observations
+    name: Publish new behavior evidence
     needs: replay
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-24.04
@@ -66,6 +51,6 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: alpercandemir/undertow/actions/replay-comment@8875d27f44dc736061b5097b297e948774d4d8bd
+      - uses: alpercandemir/undertow/actions/replay-comment@d9b6220bf2238887f7d438dbc8fee1d7b17412b5
         with:
-          artifact-pattern: coupon-*-replay-*-${{ needs.replay.outputs.attempt }}
+          artifact-pattern: coupon-behavior-replay-*-${{ needs.replay.outputs.attempt }}
