@@ -14,8 +14,5 @@ def shipping_fee(order_total: int) -> int:
 def quote_coupon_cart(item_prices: list[Decimal]) -> dict[str, Decimal]:
     """Quote the merchandise subtotal and amount due for a 10% coupon."""
     subtotal = sum(item_prices, Decimal("0.00"))
-    discount = sum(
-        ((price * COUPON_RATE).quantize(CENT, rounding=ROUND_HALF_UP) for price in item_prices),
-        Decimal("0.00"),
-    )
+    discount = (subtotal * COUPON_RATE).quantize(CENT, rounding=ROUND_HALF_UP)
     return {"subtotal": subtotal, "discount": discount, "amount_due": subtotal - discount}
