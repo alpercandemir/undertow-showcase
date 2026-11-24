@@ -1,0 +1,49 @@
+name: Coupon checkout replay
+
+on:
+  pull_request:
+    branches: [codex/coupon-rounding-baseline]
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    name: Replay coupon checkout tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Find the comparison base
+        id: comparison
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: echo "base=$(git merge-base "$BASE_SHA" "$HEAD_SHA")" >> "$GITHUB_OUTPUT"
+
+      - name: Install pytest
+        run: |
+          python3 -m venv "$RUNNER_TEMP/replay-env"
+          "$RUNNER_TEMP/replay-env/bin/python" -m pip install pytest==8.3.5
+          echo "$RUNNER_TEMP/replay-env/bin" >> "$GITHUB_PATH"
+
+      - name: Compare the three-item basket
+        uses: alpercandemir/undertow/actions/test-replay@6190350a6531e306482f156090c43961c4cff4f2
+        with:
+          base: ${{ steps.comparison.outputs.base }}
+          head: ${{ github.event.pull_request.head.sha }}
+          test: tests/test_coupon_checkout.py::test_coupon_rounds_once_on_cart_subtotal
+          artifact-name: three-item-basket
+
+      - name: Compare the single-item basket
+        uses: alpercandemir/undertow/actions/test-replay@6190350a6531e306482f156090c43961c4cff4f2
+        with:
+          base: ${{ steps.comparison.outputs.base }}
+          head: ${{ github.event.pull_request.head.sha }}
+          test: tests/test_coupon_checkout.py::test_single_item_coupon_total
+          artifact-name: single-item-basket
