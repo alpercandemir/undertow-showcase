@@ -15,6 +15,8 @@ jobs:
   replay:
     name: Replay coupon checkout tests
     runs-on: ubuntu-24.04
+    outputs:
+      attempt: ${{ steps.comparison.outputs.attempt }}
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
@@ -28,7 +30,9 @@ jobs:
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-        run: echo "base=$(git merge-base "$BASE_SHA" "$HEAD_SHA")" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "base=$(git merge-base "$BASE_SHA" "$HEAD_SHA")" >> "$GITHUB_OUTPUT"
+          echo "attempt=$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
 
       - name: Install pytest
         run: |
@@ -64,4 +68,4 @@ jobs:
     steps:
       - uses: alpercandemir/undertow/actions/replay-comment@8875d27f44dc736061b5097b297e948774d4d8bd
         with:
-          artifact-pattern: coupon-*-replay-*-${{ github.run_attempt }}
+          artifact-pattern: coupon-*-replay-*-${{ needs.replay.outputs.attempt }}
